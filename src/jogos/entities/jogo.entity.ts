@@ -4,7 +4,7 @@ export class Jogo {
   CoverImageUrl:string;
   Description:string;
   Year:string;
-  ImdbScore:number
+  ImdbScore:string
   TrailerYouTubeUrl:string;
   GameplayYouTubeUrl:string;
 }

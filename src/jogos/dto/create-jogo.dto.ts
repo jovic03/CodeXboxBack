@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateJogoDto {
 
   //****testar com video de prof se is validators estao funcionando****
-  atencaoaoerro:syabjshdba;
+  //atencaoaoerro:syabjshdba;
 
   @IsString()
   @IsEmpty()
