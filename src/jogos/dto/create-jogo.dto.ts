@@ -1,4 +1,4 @@
-import { IsString,isEmpty, IsEmpty } from "class-validator";
+import { IsString, IsEmpty } from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateJogoDto {
