@@ -8,6 +8,7 @@ import { Genero } from './entities/genero.entity';
 export class GeneroService {
 
 
+
   //genero: Genero[]=[];
 
   constructor(private readonly prisma: PrismaService){}
@@ -41,4 +42,9 @@ export class GeneroService {
       data,
     })
   }
+
+  async delete(id: string) {
+    await this.prisma.genero.delete({where:{id}})
+  }
+
 }

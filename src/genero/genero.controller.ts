@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { GeneroService } from './genero.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -20,6 +20,7 @@ export class GeneroController {
     return this.generoService.findAll();
   }
 
+
   @Get(':id')
   @ApiOperation({
     summary:'Ver um genero'
@@ -27,6 +28,7 @@ export class GeneroController {
   findOne(@Param('id') id:string):Promise<Genero>{
     return this.generoService.findOne(id);
   }
+
 
   @Post()
   @ApiOperation({
@@ -36,11 +38,23 @@ export class GeneroController {
     return this.generoService.create(createGeneroDto);
   }
 
+
   @Patch(':id')
   @ApiOperation({
-    summary:'Editar uma genero pelo ID'
+    summary:'Editar um genero pelo ID'
   })
   update(@Param('id')id:string, @Body() dto:UpdateGeneroDto): Promise<Genero>{
     return this.generoService.update(id,dto)
   }
+
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary:'Deletar um genero pelo ID'
+  })
+  delete(@Param('id') id:string){
+    this.generoService.delete(id);//nao tem return pq só precisamos que a operacao seja feita
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { JogoService } from './jogo.service';
 import { CreateJogoDto } from './dto/create-jogo.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -38,9 +38,18 @@ export class JogoController {
 
   @Patch(':id')
   @ApiOperation({
-    summary:'Editar uma jogo pelo ID'
+    summary:'Editar um jogo pelo ID'
   })
   update(@Param('id') id:string, @Body() dto:UpdateJogoDto):Promise<Jogo>{
     return this.jogoService.update(id,dto)
+  }
+
+  @Delete(':id')
+  @HttpCode((HttpStatus.NO_CONTENT))
+  @ApiOperation({
+    summary:'Deletar um jogo pelo ID'
+  })
+  delete(@Param('id') id:string){
+    this.jogoService.delete(id);//nao tem return pq só precisamos que a operacao seja feita
   }
 }

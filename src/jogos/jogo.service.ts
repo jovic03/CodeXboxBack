@@ -7,6 +7,7 @@ import { Jogo } from './entities/jogo.entity';
 @Injectable()
 export class JogoService {
 
+
   //jogo: Jogo[]=[];
 
   constructor(private readonly prisma: PrismaService){}
@@ -39,6 +40,10 @@ export class JogoService {
       where:{id},
       data,
     })
+  }
+
+  async delete(id: string) {
+    await this.prisma.jogos.delete({where:{id}})
   }
 
 }
