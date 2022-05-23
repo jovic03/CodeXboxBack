@@ -27,7 +27,7 @@ model Jogos{
 
 model Genero{
   id String @id @default(uuid())
-  Title String @unique
+  Genero String @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

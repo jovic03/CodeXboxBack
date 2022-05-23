@@ -3,8 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGeneroDto {
 
-  //****testar is validators estao funcionando****
-
   @IsString()
   @IsEmpty()
   @ApiProperty({

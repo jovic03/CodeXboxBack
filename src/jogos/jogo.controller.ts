@@ -1,22 +1,37 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { JogoService } from './jogo.service';
 import { CreateJogoDto } from './dto/create-jogo.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Jogo } from './entities/jogo.entity';
 
 
 @ApiTags('jogo')
 @Controller('jogo')
 export class JogoController {
 
-  constructor(private jogoService: JogoService) {}
+  constructor(private readonly jogoService: JogoService) {}
 
   @Get()
-  findAll() {
+  @ApiOperation({
+    summary:'Lista todos Jogos'
+  })
+  findAll(): Promise<Jogo[]> {
     return this.jogoService.findAll();
   }
 
+  @Get(':id')
+  @ApiOperation({
+    summary:'Ver um jogo'
+  })
+  findOne(@Param('id') id:string):Promise<Jogo>{
+    return this.jogoService.findOne(id);
+  }
+
   @Post()
-  create(@Body() createJogoDto: CreateJogoDto) {
+  @ApiOperation({
+    summary:'Criar um Jogo'
+  })
+  create(@Body() createJogoDto: CreateJogoDto):Promise<Jogo> {
     return this.jogoService.create(createJogoDto);
   }
 }

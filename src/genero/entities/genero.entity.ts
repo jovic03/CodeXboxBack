@@ -1,4 +1,4 @@
 export class Genero {
-  id: string;
+  id?: string;
   Genero :string;
 }
