@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { JogoService } from './jogo.service';
 import { CreateJogoDto } from './dto/create-jogo.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Jogo } from './entities/jogo.entity';
+import { UpdateJogoDto } from './dto/update-jogo.dto';
 
 
 @ApiTags('jogo')
@@ -33,5 +34,13 @@ export class JogoController {
   })
   create(@Body() createJogoDto: CreateJogoDto):Promise<Jogo> {
     return this.jogoService.create(createJogoDto);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary:'Editar uma jogo pelo ID'
+  })
+  update(@Param('id') id:string, @Body() dto:UpdateJogoDto):Promise<Jogo>{
+    return this.jogoService.update(id,dto)
   }
 }
