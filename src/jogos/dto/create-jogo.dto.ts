@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateJogoDto {
 
   @IsString()
-  @IsEmpty()
+  //@IsEmpty()
   @ApiProperty({
     description: 'O nome do jogo é',
     example: 'Sniper Elite',
