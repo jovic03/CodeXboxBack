@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { error } from 'console';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
