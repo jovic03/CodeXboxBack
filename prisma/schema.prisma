@@ -20,15 +20,32 @@ model Jogos{
   TrailerYouTubeUrl String
   GameplayYouTubeUrl String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("jogos")
 
 }
 
 model Genero{
   id String @id @default(uuid())
-  Genero String @unique
+  Genero String @unique @map("genero")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("genero")
+}
+
+model User {
+  id String @id @default(uuid())
+  nickname String @unique
+  name String
+  password String
+  image String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user")
 }
