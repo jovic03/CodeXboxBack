@@ -20,20 +20,23 @@ model Jogos {
   trailerYouTubeUrl  String @map("trailer_you_tubeUrl")
   gameplayYouTubeUrl String
 
-  //genero Genero[]
+  genero Genero[]
+
+  Profiles   Profiles[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+
 
 
   @@map("jogos")
 }
 
 model Genero {
-  id     String @id @default(uuid())
-  Genero String @unique @map("genero")
+  id   String @id @default(uuid())
+  Name String @unique @map("name")
 
-  //jogo Jogo[]
+  jogo Jogos[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -43,13 +46,35 @@ model Genero {
 
 model User {
   id       String @id @default(uuid())
-  nickname String @unique
   name     String
+  email    String
   password String
-  image    String
+  cpf      String
+  isAdmin  String @map("is_admin")
+
+  Profiles Profiles[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+
   @@map("user")
 }
+
+model Profiles {
+  id       String  @id @default(uuid())
+  title    String
+  ImageURL String  @map("image_url")
+
+  User     User    @relation(fields: [userId], references: [id])
+  userId   String  @map("user_id")
+
+  jogo     Jogos[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+
+  @@map("profiles")
+}
+
