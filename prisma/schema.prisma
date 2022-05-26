@@ -10,26 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Jogos{
-  id String @id @default(uuid())
-  Title String @unique
-  CoverImageUrl String
-  Description String
-  Year String
-  ImdbScore String
-  TrailerYouTubeUrl String
-  GameplayYouTubeUrl String
+model Jogos {
+  id                 String @id @default(uuid())
+  title              String @unique
+  coverImageUrl      String @map("cover_image_url")
+  description        String
+  year               String
+  imdbScore          String @map("imdb_score")
+  trailerYouTubeUrl  String @map("trailer_you_tubeUrl")
+  gameplayYouTubeUrl String
+
+  //genero Genero[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("jogos")
 
+  @@map("jogos")
 }
 
-model Genero{
-  id String @id @default(uuid())
+model Genero {
+  id     String @id @default(uuid())
   Genero String @unique @map("genero")
+
+  //jogo Jogo[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -38,11 +42,11 @@ model Genero{
 }
 
 model User {
-  id String @id @default(uuid())
+  id       String @id @default(uuid())
   nickname String @unique
-  name String
+  name     String
   password String
-  image String
+  image    String
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
