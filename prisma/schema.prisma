@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Jogos {
+model Jogo {
   id                 String @id @default(uuid())
   title              String
   coverImageUrl      String @map("cover_image_url")
@@ -29,14 +29,14 @@ model Jogos {
 
 
 
-  @@map("jogos")
+  @@map("jogo")
 }
 
 model Genero {
   id     String @id @default(uuid())
   genero String @map("genero")
 
-  jogo Jogos[]
+  jogos Jogo[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -69,7 +69,7 @@ model Profiles {
   User   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
 
-  jogo Jogos[]
+  jogos Jogo[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
