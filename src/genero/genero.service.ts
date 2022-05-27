@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
-import { error } from 'console';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
 import { Genero } from './entities/genero.entity';
+import { handleError} from 'src/utils/handle-error.util';
 
 @Injectable()
 export class GeneroService {
@@ -39,7 +39,7 @@ export class GeneroService {
 
     const data: Genero = {... createGeneroDto};
 
-    return this.prisma.genero.create({data}).catch(this.handleError)
+    return this.prisma.genero.create({data}).catch(handleError)
 
   }
 
@@ -62,10 +62,5 @@ export class GeneroService {
     await this.prisma.genero.delete({where:{id}})
   }
 
-  handleError (error: Error): undefined{
-    const errorLines = error.message?.split('\n');//a '?' verifica se o erro ocorreu
-    const lastErrorLine = errorLines[errorLines.length-1]?.trim() ;
-    throw new UnprocessableEntityException(lastErrorLine || 'Algum erro ocorreu ao executar a operacao');
-  }
 
 }

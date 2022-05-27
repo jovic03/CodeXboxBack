@@ -45,7 +45,7 @@ export class JogoController {
   }
 
   @Delete(':id')
-  @HttpCode((HttpStatus.NO_CONTENT))
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary:'Deletar um jogo pelo ID'
   })

@@ -1,4 +1,7 @@
 export class Genero {
   id?: string;
-  Genero :string;
+  genero :string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

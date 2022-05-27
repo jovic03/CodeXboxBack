@@ -1,10 +1,13 @@
 export class Jogo {
   id?: string;
-  Title :string;
-  CoverImageUrl:string;
-  Description:string;
-  Year:string;
-  ImdbScore:string
-  TrailerYouTubeUrl:string;
-  GameplayYouTubeUrl:string;
+  title :string;
+  coverImageUrl:string;
+  description:string;
+  year:string;
+  imdbScore:string;
+  trailerYouTubeUrl:string;
+  gameplayYouTubeUrl:string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

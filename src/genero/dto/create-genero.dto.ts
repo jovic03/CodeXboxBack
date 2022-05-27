@@ -9,5 +9,5 @@ export class CreateGeneroDto {
     description: 'Genero: ',
     example: 'FPS',
   })
-  Genero :string;
+  genero :string;
 }

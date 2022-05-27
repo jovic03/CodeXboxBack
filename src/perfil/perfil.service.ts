@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable , NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePerfilDto } from './dto/create-perfil.dto';
 import { UpdatePerfilDto } from './dto/update-perfil.dto';
+import { Perfil } from './entities/perfil.entity';
+import { handleError } from 'src/utils/handle-error.util';
 
 @Injectable()
 export class PerfilService {
-  create(createPerfilDto: CreatePerfilDto) {
-    return 'This action adds a new perfil';
+
+  constructor(private readonly prisma: PrismaService) {}
+
+  findAll():Promise<Perfil[]>{
+    return this.prisma.profiles.findMany();
   }
 
-  findAll() {
-    return `This action returns all perfil`;
+  async findOne(id:string): Promise<Perfil>{
+    const record= await this.prisma.profiles.findUnique({where:{id}})
+
+    if (!record){
+      throw new NotFoundException(`Registro com o '${id}' não encontrado.`);
+    }
+
+    return record;
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} perfil`;
+  create(createPerfilDto:CreatePerfilDto):Promise<Perfil>{
+    const data: Perfil = { ...createPerfilDto };
+
+    return this.prisma.profiles.create({
+      data,
+    }).catch(handleError);
+
   }
 
-  update(id: number, updatePerfilDto: UpdatePerfilDto) {
-    return `This action updates a #${id} perfil`;
+
+  async update(id:string,dto:UpdatePerfilDto):Promise<Perfil>{
+
+    await this.findOne(id);
+
+    const data:Partial<Perfil> = {... dto};
+
+    return this.prisma.profiles.update({
+      where:{id},
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} perfil`;
+  async delete(id:string){
+
+    await this.findOne(id);
+
+    await this.prisma.profiles.delete({
+      where:{id}
+    });
   }
 }

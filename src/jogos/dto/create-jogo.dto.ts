@@ -1,19 +1,53 @@
-import { IsString, IsEmpty } from "class-validator";
+import { IsString } from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateJogoDto {
 
   @IsString()
-  //@IsEmpty()
   @ApiProperty({
-    description: 'O nome do jogo é',
-    example: 'Sniper Elite',
+    description: 'Nome do jogo',
+    example: 'Bioshock',
   })
-  Title :string;
-  CoverImageUrl:string;
-  Description:string;
-  Year:string;
-  ImdbScore:string
-  TrailerYouTubeUrl:string;
-  GameplayYouTubeUrl:string;
+  title :string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'Capa do jogo',
+    example: 'www.imagemdobioshock.com',
+  })
+  coverImageUrl:string;
+  @IsString()
+  @ApiProperty({
+    description: 'Descricao do jogo',
+    example: 'paulosalvatore',
+  })
+  description:string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'Ano de lancamento do jogo',
+    example: '2007',
+  })
+  year:string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'Nota do IMDB de 0 à 5',
+    example: '5',
+  })
+  imdbScore:string
+
+  @IsString()
+  @ApiProperty({
+    description: 'Trailer do jogo',
+    example: 'https://www.youtube.com/watch?v=nqqZwoqCwXU',
+  })
+  trailerYouTubeUrl:string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'Gameplay do jogo',
+    example: 'https://www.youtube.com/watch?v=Yyz4NYpt8v4',
+  })
+  gameplayYouTubeUrl:string;
 }

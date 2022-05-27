@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFavoritoDto } from './dto/create-favorito.dto';
 import { UpdateFavoritoDto } from './dto/update-favorito.dto';
+import { handleError } from 'src/utils/handle-error.util';
 
 @Injectable()
 export class FavoritosService {
