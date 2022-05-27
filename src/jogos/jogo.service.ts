@@ -7,56 +7,48 @@ import { handleError } from 'src/utils/handle-error.util';
 
 @Injectable()
 export class JogoService {
-
-  constructor(private readonly prisma: PrismaService){}
+  constructor(private readonly prisma: PrismaService) {}
 
   findAll(): Promise<Jogo[]> {
-    return this.prisma.jogos.findMany();
+    return this.prisma.jogo.findMany();
   }
 
-  async findById(id:string): Promise<Jogo>{
-    const record = await this.prisma.jogos.findUnique({
-      where:{id}
+  async findById(id: string): Promise<Jogo> {
+    const record = await this.prisma.jogo.findUnique({
+      where: { id },
     });
 
-    if (!record){
-      throw new NotFoundException(`Registro com o '${id}' não encontrado.`)
+    if (!record) {
+      throw new NotFoundException(`Registro com o '${id}' não encontrado.`);
     }
 
     return record;
   }
 
-  async findOne(id:string): Promise<Jogo>{
-
+  async findOne(id: string): Promise<Jogo> {
     return this.findById(id);
-
   }
 
-  create(createJogoDto: CreateJogoDto):Promise<Jogo> {
+  create(createJogoDto: CreateJogoDto): Promise<Jogo> {
+    const data: Jogo = { ...createJogoDto };
 
-    const data: Jogo = {... createJogoDto};
-
-    return this.prisma.jogos.create({data}).catch(handleError);
+    return this.prisma.jogo.create({ data }).catch(handleError);
   }
 
   async update(id: string, dto: UpdateJogoDto): Promise<Jogo> {
-
     await this.findById(id);
 
-    const data: Partial<Jogo>={...dto}
+    const data: Partial<Jogo> = { ...dto };
 
-    return this.prisma.jogos.update({
-      where:{id},
+    return this.prisma.jogo.update({
+      where: { id },
       data,
-    })
+    });
   }
 
   async delete(id: string) {
-
     await this.findById(id);
 
-    await this.prisma.jogos.delete({where:{id}})
+    await this.prisma.jogo.delete({ where: { id } });
   }
-
-
 }
