@@ -15,10 +15,13 @@ async function bootstrap() {
     .setDescription('Dashboard do Xbox Blue-Jovic')
     .setVersion('1.0.0')
     .addTag('status')
+    .addTag('auth')
     .addTag('jogo')
     .addTag('genero')
     .addTag('perfil')
     .addTag('usuario')
+    .addTag('favoritos')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

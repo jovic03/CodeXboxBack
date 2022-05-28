@@ -13,15 +13,12 @@ export class FavoritosService {
     return `This action returns all favoritos`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} favorito`;
   }
 
-  update(id: number, updateFavoritoDto: UpdateFavoritoDto) {
-    return `This action updates a #${id} favorito`;
-  }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} favorito`;
   }
 }

@@ -24,6 +24,8 @@ model Jogo {
 
   Profiles Profiles[]
 
+  //jogoFavorito JogosFavoritos[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -71,9 +73,30 @@ model Profiles {
 
   jogos Jogo[]
 
+  //jogoFavorito JogosFavoritos[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
 
   @@map("profiles")
 }
+
+
+// model JogosFavoritos{
+//   id String @id @default(uuid())
+
+//   profile Profiles @relation(fields: [perfilId], references: [id])
+//   perfilId String @map("perfil_id")
+
+//   jogo Jogo @relation(fields: [jogoId], references: [id])
+//   jogoId String @map("jogo_id")
+
+
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @updatedAt @map("updated_at")
+
+
+//   @@unique([perfilId,jogoId])
+//   @@map("jogos_favoritos")
+// }
