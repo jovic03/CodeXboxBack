@@ -48,7 +48,7 @@ model Genero {
 
 model User {
   id       String @id @default(uuid())
-  name     String
+  name     String @unique
   email    String
   password String
   cpf      String
