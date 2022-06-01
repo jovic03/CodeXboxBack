@@ -24,7 +24,7 @@ model Jogo {
 
   Profiles Profiles[]
 
-  //jogoFavorito JogosFavoritos[]
+  jogoFavorito JogosFavoritos[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -48,7 +48,7 @@ model Genero {
 
 model User {
   id       String @id @default(uuid())
-  name     String @unique
+  name     String
   email    String
   password String
   cpf      String
@@ -73,7 +73,7 @@ model Profiles {
 
   jogos Jogo[]
 
-  //jogoFavorito JogosFavoritos[]
+  jogoFavorito JogosFavoritos[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -82,21 +82,20 @@ model Profiles {
   @@map("profiles")
 }
 
+model JogosFavoritos {
+  id String @id @default(uuid())
 
-// model JogosFavoritos{
-//   id String @id @default(uuid())
+  profile  Profiles @relation(fields: [perfilId], references: [id])
+  perfilId String   @map("perfil_id")
 
-//   profile Profiles @relation(fields: [perfilId], references: [id])
-//   perfilId String @map("perfil_id")
-
-//   jogo Jogo @relation(fields: [jogoId], references: [id])
-//   jogoId String @map("jogo_id")
-
-
-//   createdAt DateTime @default(now()) @map("created_at")
-//   updatedAt DateTime @updatedAt @map("updated_at")
+  jogo   Jogo   @relation(fields: [jogoId], references: [id])
+  jogoId String @map("jogo_id")
 
 
-//   @@unique([perfilId,jogoId])
-//   @@map("jogos_favoritos")
-// }
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+
+  @@unique([perfilId, jogoId])
+  @@map("jogos_favoritos")
+}

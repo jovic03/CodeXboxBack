@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsString, IsUrl, ValidateNested } from 'class-validator';
-import { CreateJogoFavoritoDto } from './create-perfil-favorito.dto';
+import { IsString, IsUrl, Matches, MinLength } from 'class-validator';
 
 export class CreatePerfilDto {
   @IsString()
@@ -22,9 +20,9 @@ export class CreatePerfilDto {
   @IsString()
   @ApiProperty({
     description: 'ID de jogos',
-    example:['ca5eecec-d709-4f9c-9fa0-3384f6c8c3bb','ca5eecec-d709-4f9c-9fa0-3384f6c8c3bb'],
+    example:'ca5eecec-d709-4f9c-9fa0-3384f6c8c3bb',
   })
-  jogoIds: string[];
+  jogoIds: string;
 
   @IsString()
   @ApiProperty({
@@ -33,8 +31,8 @@ export class CreatePerfilDto {
   })
   userId: string;
 
-  //implementacao de favorito
-  /*@ValidateNested({
+  // implementacao de favorito
+  @ValidateNested({
     each:true,
   })
   @Type(()=>CreateJogoFavoritoDto)
@@ -42,5 +40,5 @@ export class CreatePerfilDto {
     description: 'Lista com os IDs dos jogos',
     type:[CreateJogoFavoritoDto]
   })
-  jogos: CreateJogoFavoritoDto[];*/
+  jogosFavoritos: CreateJogoFavoritoDto[];
 }

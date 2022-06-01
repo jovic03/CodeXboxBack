@@ -4,13 +4,19 @@ import { CreatePerfilDto } from './dto/create-perfil.dto';
 import { UpdatePerfilDto } from './dto/update-perfil.dto';
 import { Perfil } from './entities/perfil.entity';
 import { handleError } from 'src/utils/handle-error.util';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Jogo } from 'src/jogos/entities/jogo.entity';
 
 @Injectable()
 export class PerfilService {
   constructor(private readonly prisma: PrismaService) {}
 
-  findAll(): Promise<Perfil[]> {
-    return this.prisma.profiles.findMany();
+  findAll() {
+    return this.prisma.profiles.findMany({
+      include:{
+      usuario:true,
+      jogo:true,}
+    });
   }
 
   async findOne(id: string): Promise<Perfil> {
@@ -29,10 +35,21 @@ export class PerfilService {
     return this.prisma.profiles
       .create({
         data: {
-          User: { connect: { id: createPerfilDto.userId } },
+          User: {
+            connect: {id: createPerfilDto.userId }
+          },
           title: data.title,
           ImageURL: data.ImageURL,
-          jogos: { connect: createPerfilDto.jogoIds.map((id) => ({ id })) },
+          jogos: {
+            connect: createPerfilDto.jogoIds.map((id) => ({ id }))
+          },
+          jogoFavorito:{
+            createMany:{
+              data:createPerfilDto.jogosFavoritos.map((createPerfilDto)=>({
+                jogoId: createPerfilDto.jogoFavoritoId
+              }))
+            }
+          }
         },
       })
       .catch(handleError);

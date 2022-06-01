@@ -1,9 +1,12 @@
+import { Jogo } from "src/jogos/entities/jogo.entity";
+import { Usuario } from "src/usuario/entities/usuario.entity";
+
 export class Perfil {
   id?: string;
   title: string;
   ImageURL: string;
-  userId?: string;
-  jogoIds?: string[];
+  usuario?: Usuario;
+  jogo?: Jogo[];
   createdAt?: Date;
   updatedAt?: Date;
 }
