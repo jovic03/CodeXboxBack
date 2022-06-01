@@ -39,7 +39,8 @@ export class PerfilService {
           title: data.title,
           ImageURL: data.ImageURL,
           jogos: {
-            connect: createPerfilDto.jogoIds.map((id) => ({ id }))
+            //connect: createPerfilDto.jogoIds.map((id) => ({ id }))
+            connect:{id:createPerfilDto.jogoIds}
           },
           jogoFavorito:{
             createMany:{
