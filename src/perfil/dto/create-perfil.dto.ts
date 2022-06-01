@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsString, IsUrl, Matches, MinLength, ValidateNested } from 'class-validator';
-import { CreateJogoFavoritoDto } from './create-perfil-favorito.dto';
+import { IsString, IsUrl, ValidateNested} from 'class-validator';
+import {Type} from "class-transformer";
+import {CreateJogoFavoritoDto} from "./create-perfil-favorito.dto";
+
 
 export class CreatePerfilDto {
   @IsString()
