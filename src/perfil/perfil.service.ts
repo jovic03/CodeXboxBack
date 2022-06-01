@@ -13,9 +13,7 @@ export class PerfilService {
 
   findAll() {
     return this.prisma.profiles.findMany({
-      include:{
-      usuario:true,
-      jogo:true,}
+      include:{usuario:true, jogo:true,}
     });
   }
 
