@@ -19,7 +19,7 @@ export class PerfilController {
 
   @Get(':id')
   @ApiOperation({summary:'Vizualizar um perfil'})
-  findOne(@Param('id') id:string): Promise<Perfil>{
+  findOne(@Param('id') id:string){
     return this.perfilService.findOne(id);
   }
 

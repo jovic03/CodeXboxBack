@@ -4,8 +4,6 @@ import { CreatePerfilDto } from './dto/create-perfil.dto';
 import { UpdatePerfilDto } from './dto/update-perfil.dto';
 import { Perfil } from './entities/perfil.entity';
 import { handleError } from 'src/utils/handle-error.util';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
-import { Jogo } from 'src/jogos/entities/jogo.entity';
 
 @Injectable()
 export class PerfilService {
@@ -13,18 +11,41 @@ export class PerfilService {
 
   findAll() {
     return this.prisma.profiles.findMany({
-      include:{User:true, jogos:true,}
+      include:{User:true, jogos:true,jogoFavorito:true}
     });
   }
 
-  async findOne(id: string): Promise<Perfil> {
-    const record = await this.prisma.profiles.findUnique({ where: { id } });
+  async findOne(id: string)/*: Promise<Perfil> */{
+    /*const record = await this.prisma.profiles.findUnique({ where: { id } });
 
     if (!record) {
       throw new NotFoundException(`Registro com o '${id}' não encontrado.`);
     }
 
-    return record;
+    return record;*/
+
+    return this.prisma.profiles.findUnique({
+      where:{id},
+      include:{
+        jogos:{
+          select:{
+            title:true,
+            genero:{
+              select:{
+                genero:true,
+              }
+            },
+            description:true,
+            coverImageUrl:true,
+            gameplayYouTubeUrl:true,
+            trailerYouTubeUrl:true,
+            imdbScore:true,
+            jogoFavorito:true
+          }
+        }
+      }
+    })
+
   }
 
   create(createPerfilDto: CreatePerfilDto): Promise<Perfil> {

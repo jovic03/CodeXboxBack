@@ -29,10 +29,12 @@ export class JogoService {
     return this.findById(id);
   }
 
-  create(createJogoDto: CreateJogoDto): Promise<Jogo> {
+  create(createJogoDto: CreateJogoDto) : Promise<Jogo>
+  {
     const data: Jogo = { ...createJogoDto };
 
     return this.prisma.jogo.create({ data }).catch(handleError);
+
   }
 
   async update(id: string, dto: UpdateJogoDto): Promise<Jogo> {

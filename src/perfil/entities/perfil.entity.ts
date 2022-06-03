@@ -4,7 +4,7 @@ import { Usuario } from "src/usuario/entities/usuario.entity";
 export class Perfil {
   id?: string;
   title: string;
-  ImageURL: string;
+  ImageURL?: string;
   usuario?: Usuario;
   jogo?: Jogo[];
   createdAt?: Date;

@@ -12,7 +12,7 @@ datasource db {
 
 model Jogo {
   id                 String @id @default(uuid())
-  title              String
+  title              String @unique
   coverImageUrl      String @map("cover_image_url")
   description        String
   year               String
@@ -36,7 +36,7 @@ model Jogo {
 
 model Genero {
   id     String @id @default(uuid())
-  genero String @map("genero")
+  genero String @map("genero") @unique
 
   jogos Jogo[]
 
@@ -48,7 +48,7 @@ model Genero {
 
 model User {
   id       String @id @default(uuid())
-  name     String
+  name     String @unique
   email    String
   password String
   cpf      String
@@ -65,7 +65,7 @@ model User {
 
 model Profiles {
   id       String @id @default(uuid())
-  title    String
+  title    String @unique
   ImageURL String @map("image_url")
 
   User   User   @relation(fields: [userId], references: [id])

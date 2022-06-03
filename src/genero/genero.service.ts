@@ -35,11 +35,27 @@ export class GeneroService {
     return this.findById(id);
   }
 
-  create(createGeneroDto: CreateGeneroDto):Promise<Genero> {
+  async create(createGeneroDto: CreateGeneroDto)/*:Promise<Genero>*/ {
 
-    const data: Genero = {... createGeneroDto};
+    /*const data: Genero = {... createGeneroDto};
 
-    return this.prisma.genero.create({data}).catch(handleError)
+    return this.prisma.genero.create({data}).catch(handleError)*/
+
+    const genero = await this.prisma.genero.findUnique({
+      where:{
+        genero:createGeneroDto.genero
+      }
+    })
+
+    if (genero){
+      throw new NotFoundException('Nome do genero já cadastrado.')
+    }
+
+    return this.prisma.genero.create({
+      data:{
+        genero:createGeneroDto.genero
+      }
+    })
 
   }
 
