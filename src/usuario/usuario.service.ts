@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { handleError } from 'src/utils/handle-error.util';
@@ -15,21 +15,32 @@ export class UsuarioService {
       email:true,
       password: false,
       cpf: true,
-      isAdmin:true,
+      isAdmin:false,
       createdAt: true,
       updatedAt: true,
     };
 
   constructor(private readonly prisma: PrismaService){}
 
-  findAll(): Promise<Usuario[]> {
-    return this.prisma.user.findMany();
+  findAll() {
+    return this.prisma.user.findMany({
+      select:this.usuarioSelect
+    });
   }
 
-  async findById(id:string): Promise<Usuario>{
+  async findById(id:string){
     const record = await this.prisma.user.findUnique({
       where:{id},
-      select:this.usuarioSelect,
+      select:{
+        id: true,
+        name: true,
+        email:true,
+        password: false,
+        cpf: true,
+        isAdmin:false,
+        createdAt: true,
+        updatedAt: true,
+      }
     });
 
     if (!record){
@@ -39,42 +50,101 @@ export class UsuarioService {
     return record;
   }
 
-  async findOne(id:string): Promise<Usuario>{
+  async findOne(email:string){
 
-    return this.findById(id);
+    const data = await this.prisma.user.findUnique({
+      where:{
+        email:email,
+      },
+      select:{
+        id: true,
+        name: true,
+        email:true,
+        password: false,
+        cpf: true,
+        isAdmin:true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    })
+
+    if (!data){
+      throw new NotFoundException('Usuario não cadastrado')
+    }
+
+    return data
 
   }
 
-  async create(createuserDto: CreateUsuarioDto):Promise<Usuario> {
+  async create(createuserDto: CreateUsuarioDto){
 
-    const data: Usuario = {
+
+    if (createuserDto.password !== createuserDto.passwordConfirmation){
+      throw new BadRequestException('Senhas não conferem.')
+    }
+
+    delete createuserDto.passwordConfirmation;
+
+    const data : Usuario = {
       ...createuserDto,
       password: await bcrypt.hash(createuserDto.password,10)
-    };
+    }
 
     return this.prisma.user.create({
       data,
-      select:this.usuarioSelect,
-    }).catch(handleError);
+      select:{
+        id: true,
+        name: true,
+        email:true,
+        password: false,
+        cpf: true,
+        isAdmin:false,
+        createdAt: true,
+        updatedAt: true,
+      }
+    })
 
   }
 
-  async update(id: string, dto: UpdateUsuarioDto): Promise<Usuario> {
+  async update(id: string, updateUsuarioDto: UpdateUsuarioDto){
 
     await this.findById(id);
 
-    const data: Partial<Usuario>={...dto};
-
-    if (data.password) {
-      data.password = await bcrypt.hash(data.password, 10);
+    if(updateUsuarioDto.cpf){
+      throw new BadRequestException('Não é possivel alterar o CPF')
     }
 
+    if (updateUsuarioDto.password){
+      if (updateUsuarioDto.password !== updateUsuarioDto.passwordConfirmation){
+        throw new BadRequestException('Senhas não conferem')
+      }
+    }
+
+    delete updateUsuarioDto.passwordConfirmation;
+
+    const data = {...updateUsuarioDto}
+
+    if (data.password){//para caso o usuario tenha passado senha nova criar uma nova hash
+      data.password = await bcrypt.hash(data.password,10)
+    }
 
     return this.prisma.user.update({
-      where:{id},
       data,
-      select:this.usuarioSelect,
-    }).catch(handleError);
+      where:{
+        id
+      },
+      select:{
+          id: true,
+          name: true,
+          email:true,
+          password: false,
+          cpf: true,
+          isAdmin:false,
+          createdAt: false,
+          updatedAt: false,
+      }
+    })
+
   }
 
   async delete(id: string) {

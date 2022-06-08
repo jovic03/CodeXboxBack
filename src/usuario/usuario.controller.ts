@@ -14,7 +14,7 @@ export class UsuarioController {
   @ApiOperation({
     summary:'Criar um usuario'
   })
-  create(@Body() createUsuarioDto: CreateUsuarioDto):Promise<Usuario> {
+  create(@Body() createUsuarioDto: CreateUsuarioDto){
     return this.usuarioService.create(createUsuarioDto);
   }
 
@@ -22,23 +22,23 @@ export class UsuarioController {
   @ApiOperation({
     summary:'Lista todos Usuarios'
   })
-  findAll(): Promise<Usuario[]> {
-    return this.usuarioService.findAll();
+  findAll(){
+    return this.usuarioService.findAll()
   }
 
-  @Get(':id')
+  @Get(':email')
   @ApiOperation({
-    summary:'Ver um usuario'
+    summary:'Ver um usuario pelo email'
   })
-  findOne(@Param('id') id: string): Promise<Usuario> {
+  findOne(@Param('email') id: string) {
     return this.usuarioService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary:'Editar um usuario pelo ID'
+    summary:'Editar um usuario pelo id'
   })
-  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
+  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuarioService.update(id, updateUsuarioDto);
   }
 

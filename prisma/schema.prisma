@@ -49,10 +49,10 @@ model Genero {
 model User {
   id       String @id @default(uuid())
   name     String @unique
-  email    String
+  email    String @unique
   password String
-  cpf      String
-  isAdmin  String @map("is_admin")
+  cpf      String @unique
+  isAdmin  Boolean @map("is_admin") @default(false)
 
   Profiles Profiles[]
 

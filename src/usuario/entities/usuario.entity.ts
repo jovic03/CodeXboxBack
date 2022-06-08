@@ -4,7 +4,7 @@ export class Usuario {
   email:string;
   password:string;
   cpf:string;
-  isAdmin:string;
+  isAdmin?:boolean;
 
   createdAt?: Date;
   updatedAt?: Date;
