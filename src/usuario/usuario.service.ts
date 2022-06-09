@@ -22,69 +22,18 @@ export class UsuarioService {
 
   constructor(private readonly prisma: PrismaService){}
 
-  findAll() {
-    return this.prisma.user.findMany({
-      select:this.usuarioSelect
-    });
-  }
-
-  async findById(id:string){
-    const record = await this.prisma.user.findUnique({
-      where:{id},
-      select:{
-        id: true,
-        name: true,
-        email:true,
-        password: false,
-        cpf: true,
-        isAdmin:false,
-        createdAt: true,
-        updatedAt: true,
-      }
-    });
-
-    if (!record){
-      throw new NotFoundException(`Registro com o '${id}' não encontrado.`)
-    }
-
-    return record;
-  }
-
-  async findOne(email:string){
-
-    const data = await this.prisma.user.findUnique({
-      where:{
-        email:email,
-      },
-      select:{
-        id: true,
-        name: true,
-        email:true,
-        password: false,
-        cpf: true,
-        isAdmin:true,
-        createdAt: true,
-        updatedAt: true,
-      }
-    })
-
-    if (!data){
-      throw new NotFoundException('Usuario não cadastrado')
-    }
-
-    return data
-
-  }
-
   async create(createuserDto: CreateUsuarioDto){
 
-
+    //confirmando senha:
     if (createuserDto.password !== createuserDto.passwordConfirmation){
       throw new BadRequestException('Senhas não conferem.')
     }
 
     delete createuserDto.passwordConfirmation;
 
+    //usuario nao pode passar cpf repetido, como tratar erro?
+
+    //recebendo os dados do usuario + cripty da senha
     const data : Usuario = {
       ...createuserDto,
       password: await bcrypt.hash(createuserDto.password,10)
@@ -102,9 +51,65 @@ export class UsuarioService {
         createdAt: true,
         updatedAt: true,
       }
-    })
+    }).catch(handleError)
 
   }
+
+  findAll() {
+    return this.prisma.user.findMany({//por id
+      select:this.usuarioSelect
+    }).catch(handleError);
+  }
+
+  async findById(id:string){
+    const record = await this.prisma.user.findUnique({
+      where:{id},
+      select:{
+        id: true,
+        name: true,
+        email:true,
+        password: false,
+        cpf: true,
+        isAdmin:false,
+        createdAt: true,
+        updatedAt: true,
+      }
+    }).catch(handleError);
+
+    if (!record){
+      throw new NotFoundException(`Registro com o '${id}' não encontrado.`)
+    }
+
+    return record;
+  }
+
+  async findOne(email:string){//por email
+
+    const data = await this.prisma.user.findUnique({
+      where:{
+        email:email,
+      },
+      select:{
+        id: true,
+        name: true,
+        email:true,
+        password: false,
+        cpf: true,
+        isAdmin:true,
+        createdAt: true,
+        updatedAt: true,
+      }
+    }).catch(handleError)
+
+    if (!data){
+      throw new NotFoundException('Usuario não cadastrado')
+    }
+
+    return data
+
+  }
+
+
 
   async update(id: string, updateUsuarioDto: UpdateUsuarioDto){
 
@@ -143,7 +148,7 @@ export class UsuarioService {
           createdAt: false,
           updatedAt: false,
       }
-    })
+    }).catch(handleError)
 
   }
 
@@ -151,7 +156,8 @@ export class UsuarioService {
 
     await this.findById(id);
 
-    await this.prisma.user.delete({where:{id}})
+    await this.prisma.user.delete({where:{id}}).catch(handleError)
+
   }
 
 

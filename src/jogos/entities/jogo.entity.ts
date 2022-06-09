@@ -11,3 +11,4 @@ export class Jogo {
   createdAt?: Date;
   updatedAt?: Date;
 }
+

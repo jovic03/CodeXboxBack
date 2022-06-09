@@ -6,7 +6,7 @@ export class CreateJogoDto {
   @IsString()
   @ApiProperty({
     description: 'Nome do jogo',
-    example: 'Bioshock',
+    example: 'Jogo Nome',
   })
   title :string;
 
@@ -19,7 +19,7 @@ export class CreateJogoDto {
   @IsString()
   @ApiProperty({
     description: 'Descricao do jogo',
-    example: 'paulosalvatore',
+    example: 'Descricao do jogo',
   })
   description:string;
 

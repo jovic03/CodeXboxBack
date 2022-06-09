@@ -4,6 +4,7 @@ import { CreatePerfilDto } from './dto/create-perfil.dto';
 import { UpdatePerfilDto } from './dto/update-perfil.dto';
 import { Perfil } from './entities/perfil.entity';
 import { handleError } from 'src/utils/handle-error.util';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Injectable()
 export class PerfilService {
@@ -11,7 +12,49 @@ export class PerfilService {
 
   findAll() {
     return this.prisma.profiles.findMany({
-      include:{User:true, jogos:true,jogoFavorito:true}
+      include:{
+        User:{
+          select:{
+            id :true ,
+            name:true ,
+            email:true ,
+            password:false,
+            cpf:true,
+            isAdmin :true ,
+
+            createdAt : false ,
+            updatedAt : false ,
+          }
+        },
+        jogos:{
+          select:{
+            id: true,
+            title :true,
+            coverImageUrl:false,
+            description:false,
+            year:false,
+            imdbScore:false,
+            trailerYouTubeUrl:false,
+            gameplayYouTubeUrl:false,
+
+            createdAt: false,
+            updatedAt: false,
+          }
+        },
+        jogoFavorito:{
+          select:{
+            id:true,
+            profile:true,
+            jogo:{
+              select:{
+                title:true,
+                genero:true
+              }
+            },
+            createdAt:false,
+            updatedAt: false,
+          }
+        }}
     });
   }
 
@@ -61,7 +104,10 @@ export class PerfilService {
           ImageURL: data.ImageURL,
           jogos: {
             //connect: createPerfilDto.jogoIds.map((id) => ({ id }))
-            connect:{id:createPerfilDto.jogoIds}
+            //connect:{id:createPerfilDto.jogoIds} //tentativa 2
+            connect:{
+              title:createPerfilDto.jogoIds
+            }
           },
           jogoFavorito:{
             createMany:{
@@ -71,9 +117,11 @@ export class PerfilService {
             }
           }
         },
-      })
-      .catch(handleError);
+      }).catch(handleError);
+
   }
+
+
 
   async update(id: string, dto: UpdatePerfilDto): Promise<Perfil> {
     await this.findOne(id);
