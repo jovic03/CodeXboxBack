@@ -1,3 +1,5 @@
+import { Genero } from "src/genero/entities/genero.entity";
+
 export class Jogo {
   id?: string;
   title :string;
@@ -7,6 +9,8 @@ export class Jogo {
   imdbScore:string;
   trailerYouTubeUrl:string;
   gameplayYouTubeUrl:string;
+
+  genero?: Genero[];
 
   createdAt?: Date;
   updatedAt?: Date;

@@ -1,5 +1,7 @@
 import { IsString } from "class-validator";
 import { ApiProperty } from '@nestjs/swagger';
+import { Genero } from "src/genero/entities/genero.entity";
+
 
 export class CreateJogoDto {
 
@@ -46,8 +48,17 @@ export class CreateJogoDto {
 
   @IsString()
   @ApiProperty({
-    description: 'Gameplay do jogo',
+    description: 'Gameplay do jogo SaaS',
     example: 'https://www.youtube.com/watch?v=Yyz4NYpt8v4',
   })
   gameplayYouTubeUrl:string;
+
+  @IsString()
+  @ApiProperty({
+    description: 'Genero',
+    example:'FPS' ,
+  })
+  genero: Genero[];
+
+
 }

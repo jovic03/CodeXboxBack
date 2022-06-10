@@ -36,7 +36,7 @@ model Jogo {
 
 model Genero {
   id     String @id @default(uuid())
-  genero String @map("genero") @unique
+  genero String @unique @map("genero")
 
   jogos Jogo[]
 
@@ -47,12 +47,12 @@ model Genero {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String @unique
-  email    String @unique
+  id       String  @id @default(uuid())
+  name     String  @unique
+  email    String  @unique
   password String
-  cpf      String @unique
-  isAdmin  Boolean @map("is_admin") @default(false)
+  cpf      String  @unique
+  isAdmin  Boolean @default(false) @map("is_admin")
 
   Profiles Profiles[]
 
@@ -99,3 +99,20 @@ model JogosFavoritos {
   @@unique([perfilId, jogoId])
   @@map("jogos_favoritos")
 }
+
+// model GeneroJogo {
+
+//   id String @id @default(uuid())
+
+//   Jogo     Jogo   @relation(fields: [jogoId], references: [id])
+//   jogoId   String @map("jogo_id")
+//   Genero   Genero @relation(fields: [generoId], references: [id])
+//   generoId String @map("genero_id")
+
+
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @updatedAt @map("updated_at")
+
+//   @@map("genero_jogo")
+
+// }

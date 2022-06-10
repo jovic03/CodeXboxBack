@@ -31,9 +31,31 @@ export class JogoService {
 
   create(createJogoDto: CreateJogoDto) : Promise<Jogo>
   {
+    /*const data: Jogo = { ...createJogoDto };
+
+    return this.prisma.jogo.create({ data }).catch(handleError);*/
+
     const data: Jogo = { ...createJogoDto };
 
-    return this.prisma.jogo.create({ data }).catch(handleError);
+    return this.prisma.jogo.create({
+      data:{
+        id:data.id,
+        title:data.title,
+        genero:{
+          connect:{genero:data.genero.toString()}
+        },
+        description:data.description,
+        coverImageUrl:data.coverImageUrl,
+        year:data.year,
+        imdbScore:data.imdbScore,
+        trailerYouTubeUrl:data.trailerYouTubeUrl,
+        gameplayYouTubeUrl:data.gameplayYouTubeUrl
+
+      }
+    })
+
+
+
 
   }
 
