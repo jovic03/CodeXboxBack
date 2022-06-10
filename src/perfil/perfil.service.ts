@@ -91,7 +91,7 @@ export class PerfilService {
 
   }
 
-  create(createPerfilDto: CreatePerfilDto): Promise<Perfil> {
+  create(createPerfilDto: CreatePerfilDto) {
     const data: Perfil = { ...createPerfilDto };
 
     return this.prisma.profiles
@@ -111,9 +111,18 @@ export class PerfilService {
           },
           jogoFavorito:{
             createMany:{
-              data:createPerfilDto.jogosFavoritos.map((createPerfilDto)=>({
-                jogoId: createPerfilDto.jogoFavoritoId
+              data:
+              //modo1 orignal
+                /*createPerfilDto.jogosFavoritos.map((createPerfilDto)=>({
+                jogoId: createPerfilDto.jogoFavoritoId,
+              }))*/
+
+              //modo2
+              createPerfilDto.jogosFavoritos.map((createJogoFavoritoDto)=>({
+                jogoId:createJogoFavoritoDto.jogoFavoritoId,
+                jogoNome:createJogoFavoritoDto.nomeJogo
               }))
+
             }
           }
         },

@@ -100,19 +100,4 @@ model JogosFavoritos {
   @@map("jogos_favoritos")
 }
 
-// model GeneroJogo {
 
-//   id String @id @default(uuid())
-
-//   Jogo     Jogo   @relation(fields: [jogoId], references: [id])
-//   jogoId   String @map("jogo_id")
-//   Genero   Genero @relation(fields: [generoId], references: [id])
-//   generoId String @map("genero_id")
-
-
-//   createdAt DateTime @default(now()) @map("created_at")
-//   updatedAt DateTime @updatedAt @map("updated_at")
-
-//   @@map("genero_jogo")
-
-// }

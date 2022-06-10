@@ -23,7 +23,7 @@ export class CreatePerfilDto {
   @IsString()
   @ApiProperty({
     description: 'ID de jogos',
-    example:'ca5eecec-d709-4f9c-9fa0-3384f6c8c3bb',
+    example:'04f1f8e9-3a88-4e7a-a9d6-07ff3ecc8069',
   })
   jogoIds: string;
 
@@ -31,7 +31,7 @@ export class CreatePerfilDto {
   @IsString()
   @ApiProperty({
     description: 'ID de usuario',
-    example:'0397c13f-483b-475e-bd58-a7df84cdbea0' ,
+    example:'2c662b25-c07d-4e92-ad31-6ccc1ccf22e0' ,
   })
   userId: string;
 
@@ -45,4 +45,5 @@ export class CreatePerfilDto {
     type:[CreateJogoFavoritoDto]
   })
   jogosFavoritos: CreateJogoFavoritoDto[];
+
 }

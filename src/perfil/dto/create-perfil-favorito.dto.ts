@@ -9,4 +9,12 @@ export class CreateJogoFavoritoDto {
   })
   jogoFavoritoId: string;
 
+  @IsUUID()
+  @ApiProperty({
+    description: 'Nome do jogo',
+    example: 'AC: Revelations',
+  })
+  nomeJogo: string;
+
+
 }
