@@ -38,7 +38,7 @@ export class FavoritosController {
   @ApiOperation({
     summary: 'Remover um favorito pelo ID',
   })
-  remove(@Param('id') id: string) {
-    return this.favoritosService.remove(id);
+  delete(@Param('id') id: string) {
+    return this.favoritosService.delete(id);
   }
 }
