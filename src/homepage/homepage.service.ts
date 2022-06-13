@@ -21,9 +21,10 @@ export class HomepageService {
         },
         jogos:{
           select:{
+            title:true,
             genero:{
               select:{
-                genero:true
+                genero:true,
               }
             }
           }
