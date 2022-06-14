@@ -17,11 +17,13 @@ export class AuthService {
 
     //const {nickname, password} = loginDto;
 
-    const nickname = loginDto.nickname;
+    const email = loginDto.email;
     const password = loginDto.password;
 
     // Procura e checa se o user existe, usando o nickname
-    const user = await this.prisma.user.findUnique({where:{name:nickname}});
+    const user = await this.prisma.user.findUnique({
+      where:{email:email}
+    });
 
     if (!user) {
       throw new UnauthorizedException('Usuário e/ou senha inválidos');
@@ -37,7 +39,7 @@ export class AuthService {
     delete user.password;
 
     return{
-      token:this.jwtService.sign({nickname}),
+      token:this.jwtService.sign({email}),
       user,
     };
   }

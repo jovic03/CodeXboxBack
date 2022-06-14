@@ -5,10 +5,10 @@ export class LoginDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: 'Nome do usuário',
-    example: 'usuario4',
+    description: 'Email do usuário',
+    example: 'usuario4@gmail.com',
   })
-  nickname: string;
+  email: string;
 
   @IsString()
   @IsNotEmpty()

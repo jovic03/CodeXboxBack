@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
 import { Genero } from './entities/genero.entity';
 import { handleError} from 'src/utils/handle-error.util';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Injectable()
 export class GeneroService {
@@ -35,11 +36,17 @@ export class GeneroService {
     return this.findById(id);
   }
 
-  async create(createGeneroDto: CreateGeneroDto)/*:Promise<Genero>*/ {
+  async create(user: Usuario, createGeneroDto: CreateGeneroDto)/*:Promise<Genero>*/ {
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+    }
 
     /*const data: Genero = {... createGeneroDto};
 
     return this.prisma.genero.create({data}).catch(handleError)*/
+
+    //console.log(user)
 
     const genero = await this.prisma.genero.findUnique({
       where:{
@@ -59,7 +66,11 @@ export class GeneroService {
 
   }
 
-  async update(id: string, dto: UpdateGeneroDto): Promise<Genero> {
+  async update(user: Usuario,id: string, dto: UpdateGeneroDto): Promise<Genero> {
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+    }
 
     await this.findById(id);
 
@@ -71,7 +82,11 @@ export class GeneroService {
     })
   }
 
-  async delete(id: string) {
+  async delete(user: Usuario,id: string) {
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+    }
 
     await this.findById(id);
 

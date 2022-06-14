@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateJogoDto } from './dto/create-jogo.dto';
 import { UpdateJogoDto } from './dto/update-jogo.dto';
 import { Jogo } from './entities/jogo.entity';
 import { handleError } from 'src/utils/handle-error.util';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Injectable()
 export class JogoService {
@@ -29,8 +30,13 @@ export class JogoService {
     return this.findById(id);
   }
 
-  create(createJogoDto: CreateJogoDto) : Promise<Jogo>
+  create(user: Usuario,createJogoDto: CreateJogoDto) : Promise<Jogo>
   {
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um jogo')
+    }
+
     /*const data: Jogo = { ...createJogoDto };
 
     return this.prisma.jogo.create({ data }).catch(handleError);*/
@@ -59,7 +65,12 @@ export class JogoService {
 
   }
 
-  async update(id: string, dto: UpdateJogoDto): Promise<Jogo> {
+  async update(user: Usuario,id: string, dto: UpdateJogoDto): Promise<Jogo> {
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+    }
+
     await this.findById(id);
 
     const data: Partial<Jogo> = { ...dto };
@@ -70,7 +81,14 @@ export class JogoService {
     });
   }
 
-  async delete(id: string) {
+  async delete(user: Usuario,id: string) {
+
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+    }
+
+
     await this.findById(id);
 
     await this.prisma.jogo.delete({ where: { id } });
