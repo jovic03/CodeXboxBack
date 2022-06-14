@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { handleError } from 'src/utils/handle-error.util';
@@ -22,7 +22,11 @@ export class UsuarioService {
 
   constructor(private readonly prisma: PrismaService){}
 
-  async create(createuserDto: CreateUsuarioDto){
+  async create(user: Usuario,createuserDto: CreateUsuarioDto){
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para criar um usuario')
+    }
 
     //confirmando senha:
     if (createuserDto.password !== createuserDto.passwordConfirmation){
@@ -111,7 +115,11 @@ export class UsuarioService {
 
 
 
-  async update(id: string, updateUsuarioDto: UpdateUsuarioDto){
+  async update(user: Usuario,id: string, updateUsuarioDto: UpdateUsuarioDto){
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para atualizar um usuario')
+    }
 
     await this.findById(id);
 
@@ -152,7 +160,11 @@ export class UsuarioService {
 
   }
 
-  async delete(id: string) {
+  async delete(user: Usuario,id: string) {
+
+    if(!user.isAdmin){
+      throw new UnauthorizedException('Usuario deve ser Admin para deletar um usuario')
+    }
 
     await this.findById(id);
 

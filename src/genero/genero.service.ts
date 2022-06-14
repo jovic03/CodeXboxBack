@@ -9,8 +9,6 @@ import { Usuario } from 'src/usuario/entities/usuario.entity';
 @Injectable()
 export class GeneroService {
 
-
-
   //genero: Genero[]=[];
 
   constructor(private readonly prisma: PrismaService){}
@@ -69,7 +67,7 @@ export class GeneroService {
   async update(user: Usuario,id: string, dto: UpdateGeneroDto): Promise<Genero> {
 
     if(!user.isAdmin){
-      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+      throw new UnauthorizedException('Usuario deve ser Admin para atualizar um gênero')
     }
 
     await this.findById(id);
@@ -85,7 +83,7 @@ export class GeneroService {
   async delete(user: Usuario,id: string) {
 
     if(!user.isAdmin){
-      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+      throw new UnauthorizedException('Usuario deve ser Admin para deletar um gênero')
     }
 
     await this.findById(id);

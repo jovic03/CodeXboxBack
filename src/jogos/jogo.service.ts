@@ -68,7 +68,7 @@ export class JogoService {
   async update(user: Usuario,id: string, dto: UpdateJogoDto): Promise<Jogo> {
 
     if(!user.isAdmin){
-      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+      throw new UnauthorizedException('Usuario deve ser Admin para atualizar um jogo')
     }
 
     await this.findById(id);
@@ -85,7 +85,7 @@ export class JogoService {
 
 
     if(!user.isAdmin){
-      throw new UnauthorizedException('Usuario deve ser Admin para criar um gênero')
+      throw new UnauthorizedException('Usuario deve ser Admin para deletar um jogo')
     }
 
 
