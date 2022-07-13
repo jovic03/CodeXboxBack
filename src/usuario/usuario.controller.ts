@@ -8,8 +8,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { LoggedUser } from 'src/auth/logged-user.decorator';
 
 @ApiTags('usuario')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
 @Controller('usuario')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
@@ -23,6 +21,8 @@ export class UsuarioController {
   }
 
   @Get()
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary:'Lista todos Usuarios'
   })
@@ -31,6 +31,8 @@ export class UsuarioController {
   }
 
   @Get(':email')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary:'Ver um usuario pelo email'
   })
@@ -39,6 +41,8 @@ export class UsuarioController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   @ApiOperation({
     summary:'Editar um usuario pelo id'
   })
