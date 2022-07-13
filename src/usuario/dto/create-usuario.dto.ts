@@ -42,7 +42,7 @@ export class CreateUsuarioDto {
   @IsString()
   @IsByteLength(11)
   @ApiProperty({
-    description: 'CPF do usuario (deve ter 11 caracteres',
+    description: 'CPF do usuario (deve ter 11 caracteres)',
     example: '12345678911',
   })
   cpf:string;

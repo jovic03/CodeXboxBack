@@ -5,6 +5,7 @@ import { handleError } from 'src/utils/handle-error.util';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
+import { domainToASCII } from 'url';
 
 @Injectable()
 export class UsuarioService {
@@ -22,11 +23,11 @@ export class UsuarioService {
 
   constructor(private readonly prisma: PrismaService){}
 
-  async create(user: Usuario,createuserDto: CreateUsuarioDto){
+  async create(createuserDto: CreateUsuarioDto): Promise<Usuario>{
 
-    if(!user.isAdmin){
-      throw new UnauthorizedException('Usuario deve ser Admin para criar um usuario')
-    }
+    // if(!user.isAdmin){
+    //   throw new UnauthorizedException('Usuario deve ser Admin para criar um usuario')
+    // }
 
     //confirmando senha:
     if (createuserDto.password !== createuserDto.passwordConfirmation){
@@ -44,17 +45,15 @@ export class UsuarioService {
     }
 
     return this.prisma.user.create({
-      data,
-      select:{
-        id: true,
-        name: true,
-        email:true,
-        password: false,
-        cpf: true,
-        isAdmin:false,
-        createdAt: true,
-        updatedAt: true,
-      }
+      data:{
+        ...data,
+        profiles:{
+          create:{
+            title: createuserDto.name
+          }
+        }
+      },
+            select:this.usuarioSelect
     }).catch(handleError)
 
   }
