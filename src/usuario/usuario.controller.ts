@@ -18,8 +18,8 @@ export class UsuarioController {
   @ApiOperation({
     summary:'Criar um usuario'
   })
-  create(@Body() createUsuarioDto: CreateUsuarioDto){
-    return this.usuarioService.create(createUsuarioDto);
+  create(@LoggedUser() user: Usuario ,@Body() createUsuarioDto: CreateUsuarioDto){
+    return this.usuarioService.create(user,createUsuarioDto);
   }
 
   @Get()
