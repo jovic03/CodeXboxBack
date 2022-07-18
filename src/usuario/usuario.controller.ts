@@ -21,8 +21,6 @@ export class UsuarioController {
   }
 
   @Get()
-  @UseGuards(AuthGuard())
-  @ApiBearerAuth()
   @ApiOperation({
     summary:'Lista todos Usuarios'
   })
