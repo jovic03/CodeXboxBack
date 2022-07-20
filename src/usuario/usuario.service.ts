@@ -22,11 +22,11 @@ export class UsuarioService {
 
   constructor(private readonly prisma: PrismaService){}
 
-  async create(user: Usuario,createuserDto: CreateUsuarioDto){
+  async create(createuserDto: CreateUsuarioDto){
 
-    if(!user.isAdmin){
-      throw new UnauthorizedException('Usuario deve ser Admin para criar um usuario')
-    }
+    // if(!user.isAdmin){
+    //   throw new UnauthorizedException('Usuario deve ser Admin para criar um usuario')
+    // }
 
     //confirmando senha:
     if (createuserDto.password !== createuserDto.passwordConfirmation){

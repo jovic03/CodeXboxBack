@@ -12,12 +12,20 @@ import { LoggedUser } from 'src/auth/logged-user.decorator';
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  @Post()
+  /*@Post()
   @ApiOperation({
     summary:'Criar um usuario'
   })
   create(@LoggedUser() user: Usuario ,@Body() createUsuarioDto: CreateUsuarioDto){
     return this.usuarioService.create(user,createUsuarioDto);
+  }*/
+
+  @Post()
+  @ApiOperation({
+    summary:'Criar um usuario'
+  })
+  create(@Body()  createUsuarioDto: CreateUsuarioDto){
+    return this.usuarioService.create(createUsuarioDto);
   }
 
   @Get()
