@@ -109,22 +109,7 @@ export class PerfilService {
               title:createPerfilDto.jogoIds
             }
           },
-          jogoFavorito:{
-            createMany:{
-              data:
-              //modo1 orignal
-                /*createPerfilDto.jogosFavoritos.map((createPerfilDto)=>({
-                jogoId: createPerfilDto.jogoFavoritoId,
-              }))*/
 
-              //modo2
-              createPerfilDto.jogosFavoritos.map((createJogoFavoritoDto)=>({
-                jogoId:createJogoFavoritoDto.jogoFavoritoId,
-                jogoNome:createJogoFavoritoDto.nomeJogo
-              }))
-
-            }
-          }
         },
       }).catch(handleError);
 
